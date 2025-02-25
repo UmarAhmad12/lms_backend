@@ -1,17 +1,27 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "./index.js",
-        "use": "@vercel/node"
-      }
-    ],
+  "version": 2,
+  "builds": [
+    {
+      "src": "./index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
       "headers": [
-        {
-          "source": "/api/(.*)",
-          "headers": [
-            { "key": "Access-Control-Allow-Origin", "value": "https://lms-frontend-iota-puce.vercel.app" }
-          ]
-        }
+        { "key": "Access-Control-Allow-Origin", "value": "https://lms-frontend-iota-puce.vercel.app" }
       ]
-  }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/index.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.js"
+    }
+  ]
+}
