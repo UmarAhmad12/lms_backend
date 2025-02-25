@@ -12,12 +12,12 @@ const app = express();
 // Middlewares
 // Built-In
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 // Third-Party
 app.use(
   cors({
     origin: [process.env.FRONTEND_URL],
-    credentials: false,
+    credentials: true,
   })
 );
 app.use(morgan("dev"));
