@@ -1,26 +1,16 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "./index.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/",
-      "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
-    }
-  ],
-  "headers": [
-    {
-      "source": "/api/v1/(.*)", 
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "https://lms-frontend-iota-puce.vercel.app" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET,POST,PUT,DELETE" },
-        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
-      ]
-    }
-  ]
-}
+    "version": 2,
+    "builds": [
+      {
+        "src": "./index.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "api/v1/(.*)",
+        "dest": "/",
+        "methods":["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+      }
+    ]
+  }
