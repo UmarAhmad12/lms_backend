@@ -6,7 +6,6 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import morgan from "morgan";
 import errorMiddleware from "./middlewares/error.middleware.js";
-import connectToDB from "./configs/dbConn.js";
 
 const app = express();
 
@@ -35,7 +34,7 @@ app.listen(PORT, async () => {
 });
 
 // Server Status Check Route
-app.get("/ping", (_req, res) => {
+app.get("/", (_req, res) => {
   res.send("Pong");
 });
 
