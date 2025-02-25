@@ -17,8 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: [process.env.FRONTEND_URL],
-    credentials: false,
-    "Access-Control-Allow-Origin":"*"
+    credentials: true,
   })
 );
 app.use(morgan("dev"));
