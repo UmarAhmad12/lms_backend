@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 // Third-Party
 app.use(
   cors({
-    origin: "https://lms-frontend-iota-puce.vercel.app",
+    origin: [process.env.FRONTEND_URL],
     credentials: true,
   })
 );
