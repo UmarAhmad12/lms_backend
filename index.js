@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import morgan from "morgan";
 import errorMiddleware from "./middlewares/error.middleware.js";
+import connectToDB from "./configs/dbConn.js";
 
 const app = express();
 
@@ -24,6 +25,15 @@ app.use(
 app.use(morgan("dev"));
 app.use(cookieParser());
 
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, async () => {
+  // Connect to DB
+  await connectToDB();
+  console.log(`App is running at http://localhost:${PORT}`);
+});
+
 // Server Status Check Route
 app.get("/", (_req, res) => {
   res.send("Pong");
@@ -34,6 +44,7 @@ import userRoutes from "./routes/user.routes.js";
 import courseRoutes from "./routes/course.routes.js";
 import paymentRoutes from "./routes/payment.routes.js";
 import miscRoutes from "./routes/miscellaneous.routes.js";
+import connectToDB from "./configs/dbConn.js";
 
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/courses", courseRoutes);
