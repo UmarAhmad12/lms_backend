@@ -9,20 +9,39 @@ import errorMiddleware from "./middlewares/error.middleware.js";
 
 const app = express();
 
-// Middlewares
-// Built-In
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// Third-Party
+app.use(cookieParser());
+app.use(morgan("dev"));
+
+// CORS Configuration
+const allowedOrigins = [process.env.FRONTEND_URL];
+
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL],
+    origin: allowedOrigins, // Ensure this is correctly loaded
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
+    credentials: true, // Required for cookies and sessions
   })
 );
-app.use(morgan("dev"));
-app.use(cookieParser());
+
+// Manually set CORS headers for preflight requests
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  }
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
 
 // Server Status Check Route
 app.get("/", (_req, res) => {
@@ -40,12 +59,16 @@ app.use("/api/v1/courses", courseRoutes);
 app.use("/api/v1/payments", paymentRoutes);
 app.use("/api/v1", miscRoutes);
 
-// Default catch all route - 404
+// Default catch-all route - 404
 app.all("*", (_req, res) => {
   res.status(404).send("OOPS!!! 404 Page Not Found");
 });
 
 // Custom error handling middleware
 app.use(errorMiddleware);
+
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 export default app;
