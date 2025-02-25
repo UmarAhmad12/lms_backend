@@ -27,15 +27,5 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
-  },
-  
-    "headers": [
-      {
-        "source": "/api/(.*)",
-        "headers": [
-          { "key": "Access-Control-Allow-Origin", "value": "https://lms-frontend-iota-puce.vercel.app" }
-        ]
-      }
-    ]
-  
+  }
 }
